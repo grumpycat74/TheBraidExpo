@@ -13,6 +13,9 @@ export default defineConfig({
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
     server: { entry: "server" },
+    // Client-only bootstrap (src/client.tsx) — skips SSR hydration so the
+    // static GitHub Pages build can start without server-rendered data.
+    client: { entry: "client" },
     // Build as a client-only single-page app so the site can be hosted on GitHub Pages.
     spa: {
       enabled: true,
