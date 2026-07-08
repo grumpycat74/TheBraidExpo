@@ -44,6 +44,27 @@ jobs:
             done
           fi
           if [ ! -f "$dir/index.html" ]; then
+            js=$(cd "$dir" && ls assets/index-*.js 2>/dev/null | head -1)
+            css=$(cd "$dir" && ls assets/styles-*.css 2>/dev/null | head -1)
+            if [ -n "$js" ]; then
+              {
+                echo '<!doctype html>'
+                echo '<html lang="en">'
+                echo '<head>'
+                echo '<meta charset="utf-8">'
+                echo '<meta name="viewport" content="width=device-width, initial-scale=1">'
+                echo '<title>The Braid Expo | Premium Braiding Studio in Lancaster, CA</title>'
+                [ -n "$css" ] && echo "<link rel=\"stylesheet\" href=\"/TheBraidExpo/$css\">"
+                echo '</head>'
+                echo '<body>'
+                echo "<script type=\"module\" src=\"/TheBraidExpo/$js\"></script>"
+                echo '</body>'
+                echo '</html>'
+              } > "$dir/index.html"
+              echo "Generated SPA shell index.html using $js"
+            fi
+          fi
+          if [ ! -f "$dir/index.html" ]; then
             echo "No index.html was produced - build truly failed"
             find "$dir" -maxdepth 2 -name "*.html" -print
             exit 1
