@@ -70,7 +70,7 @@ export function BookingModal() {
           </div>
         </div>
 
-        <div className="p-6 sm:p-8">
+        <div className="p-6 sm:p-8 min-w-0">
           {step === 0 && (
             <div>
               <h2 className="font-serif text-2xl">Choose your style</h2>
@@ -100,7 +100,7 @@ export function BookingModal() {
 
               <div className="mt-5">
                 <p className="editorial-eyebrow mb-3">Select a date</p>
-                <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1">
+                <div className="flex flex-wrap gap-2">
                   {dates.map(d => {
                     const active = date?.toDateString() === d.toDateString();
                     return (
