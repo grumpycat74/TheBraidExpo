@@ -18,6 +18,11 @@ const container =
     return el;
   })();
 
+// Signal the root route to skip the <html>/<body> document shell. Rendering
+// document tags into #root corrupts React 19 singleton handling and freezes
+// the page on trusted focus events (facebook/react#35480).
+(window as unknown as { __TBE_CLIENT_ONLY__?: boolean }).__TBE_CLIENT_ONLY__ = true;
+
 createRoot(container).render(
   <StrictMode>
     <RouterProvider router={router} />
