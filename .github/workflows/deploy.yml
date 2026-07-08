@@ -64,7 +64,6 @@ jobs:
                 echo '</head>'
                 echo '<body>'
                 echo '<div id="root"></div>'
-                echo '<script src="/TheBraidExpo/tbe-debug.js"></script>'
                 echo "<script type=\"module\" src=\"/TheBraidExpo/$js\"></script>"
                 echo '</body>'
                 echo '</html>'
