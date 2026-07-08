@@ -44,7 +44,7 @@ jobs:
             done
           fi
           if [ ! -f "$dir/index.html" ]; then
-            js=$(cd "$dir" && ls assets/index-*.js 2>/dev/null | head -1)
+            js=$(cd "$dir" && ls assets/client-*.js assets/index-*.js assets/main-*.js 2>/dev/null | head -1)
             css=$(cd "$dir" && ls assets/styles-*.css 2>/dev/null | head -1)
             if [ -n "$js" ]; then
               {
@@ -53,10 +53,17 @@ jobs:
                 echo '<head>'
                 echo '<meta charset="utf-8">'
                 echo '<meta name="viewport" content="width=device-width, initial-scale=1">'
-                echo '<title>The Braid Expo | Premium Braiding Studio in Lancaster, CA</title>'
+                echo '<title>The Braid Expo — Premium Braiding Salon & Beauty Destination</title>'
+                echo '<meta name="description" content="Book premium braids, shop beauty essentials, and join a modern braiding house rooted in 90s Black beauty culture.">'
+                echo '<meta name="theme-color" content="#FCF7F2">'
+                echo '<link rel="icon" href="/TheBraidExpo/favicon.ico" type="image/x-icon">'
+                echo '<link rel="preconnect" href="https://fonts.googleapis.com">'
+                echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
+                echo '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700&family=Inter:wght@400;500;600;700&family=Great+Vibes&display=swap">'
                 [ -n "$css" ] && echo "<link rel=\"stylesheet\" href=\"/TheBraidExpo/$css\">"
                 echo '</head>'
                 echo '<body>'
+                echo '<div id="root"></div>'
                 echo "<script type=\"module\" src=\"/TheBraidExpo/$js\"></script>"
                 echo '</body>'
                 echo '</html>'
