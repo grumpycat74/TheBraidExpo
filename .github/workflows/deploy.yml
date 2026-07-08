@@ -80,6 +80,14 @@ jobs:
           cp "$dir/index.html" "$dir/404.html" 2>/dev/null || true
           touch "$dir/.nojekyll"
 
+      - name: Optimize logo
+        env:
+          ODIR: ${{ steps.out.outputs.dir }}
+        run: |
+          python3 -m pip install pillow -q
+          echo "aW1wb3J0IHJlLCBiYXNlNjQsIGlvLCBvcywgc3lzCmZyb20gUElMIGltcG9ydCBJbWFnZQpkID0gc3lzLmFyZ3ZbMV0Kc3JjID0gb3MucGF0aC5qb2luKGQsICdUaGUgQnJhaWQgRXhwbyBMb2dvLnN2ZycpCmRzdCA9IG9zLnBhdGguam9pbihkLCAnbG9nby5zdmcnKQpzdmcgPSBvcGVuKHNyYykucmVhZCgpCmRlZiBzaHJpbmsobSk6CiAgICBkYXRhID0gYmFzZTY0LmI2NGRlY29kZShtLmdyb3VwKDEpKQogICAgaW0gPSBJbWFnZS5vcGVuKGlvLkJ5dGVzSU8oZGF0YSkpLmNvbnZlcnQoJ1JHQkEnKQogICAgdywgaCA9IGltLnNpemUKICAgIGltID0gaW0ucmVzaXplKChtYXgoMSwgdyAvLyA0KSwgbWF4KDEsIGggLy8gNCkpLCBJbWFnZS5MQU5DWk9TKQogICAgciwgZywgYiwgYSA9IGltLnNwbGl0KCkKICAgIGlmIHIudG9ieXRlcygpID09IGcudG9ieXRlcygpID09IGIudG9ieXRlcygpOgogICAgICAgIGltID0gaW0uY29udmVydCgnTCcpCiAgICBlbHNlOgogICAgICAgIGltID0gaW0ucXVhbnRpemUoMjU2LCBtZXRob2Q9SW1hZ2UuRkFTVE9DVFJFRSkKICAgIGJ1ZiA9IGlvLkJ5dGVzSU8oKQogICAgaW0uc2F2ZShidWYsICdQTkcnLCBvcHRpbWl6ZT1UcnVlKQogICAgcmV0dXJuICd4bGluazpocmVmPSJkYXRhOmltYWdlL3BuZztiYXNlNjQsJyArIGJhc2U2NC5iNjRlbmNvZGUoYnVmLmdldHZhbHVlKCkpLmRlY29kZSgpICsgJyInCm91dCA9IHJlLnN1YihyJ3hsaW5rOmhyZWY9ImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCwoW14iXSspIicsIHNocmluaywgc3ZnKQpvcGVuKGRzdCwgJ3cnKS53cml0ZShvdXQpCnByaW50KCdsb2dvLnN2ZyBieXRlczonLCBvcy5wYXRoLmdldHNpemUoZHN0KSkK" | base64 -d | python3 - "$ODIR" || cp "$ODIR/The Braid Expo Logo.svg" "$ODIR/logo.svg"
+          rm -f "$ODIR/The Braid Expo Logo.svg"
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
