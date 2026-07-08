@@ -91,6 +91,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  if (typeof window !== "undefined" && (window as unknown as { __TBE_CLIENT_ONLY__?: boolean }).__TBE_CLIENT_ONLY__) {
+    // Client-only static build (GitHub Pages): rendering <html>/<body> into
+    // #root corrupts React 19's singleton element handling and hard-freezes
+    // the page on trusted focus events (facebook/react#35480).
+    return (
+      <>
+        <HeadContent />
+        {children}
+      </>
+    );
+  }
+
   return (
     <html lang="en">
       <head>
