@@ -7,6 +7,8 @@ export const getRouter = () => {
 
   const router = createRouter({
     routeTree,
+    // Serve under the GitHub Pages subpath (e.g. /TheBraidExpo/)
+    basepath: import.meta.env.BASE_URL,
     context: { queryClient },
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
