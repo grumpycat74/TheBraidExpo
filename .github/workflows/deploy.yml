@@ -39,7 +39,13 @@ jobs:
           elif [ -d dist/public ]; then dir=dist/public
           else dir=dist; fi
           if [ ! -f "$dir/index.html" ]; then
+            for f in "$dir/TheBraidExpo/index.html" "$dir/_shell.html" "$dir/_shell/index.html"; do
+              if [ -f "$f" ]; then cp "$f" "$dir/index.html"; break; fi
+            done
+          fi
+          if [ ! -f "$dir/index.html" ]; then
             echo "No index.html was produced - build truly failed"
+            find "$dir" -maxdepth 2 -name "*.html" -print
             exit 1
           fi
           echo "dir=$dir" >> "$GITHUB_OUTPUT"
