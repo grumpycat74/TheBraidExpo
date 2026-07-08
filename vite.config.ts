@@ -14,6 +14,12 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
     // Build as a client-only single-page app so the site can be hosted on GitHub Pages.
-    spa: { enabled: true },
+    spa: {
+      enabled: true,
+      // Render the SPA shell from the GitHub Pages subpath so the router matches it,
+      // and write it straight to index.html in the build output.
+      maskPath: "/TheBraidExpo/",
+      prerender: { outputPath: "/index.html", crawlLinks: false },
+    },
   },
 });
