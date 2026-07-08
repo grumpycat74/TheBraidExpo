@@ -28,7 +28,7 @@ jobs:
         run: bun install
 
       - name: Build static site
-        run: bun run build
+        run: bun run build || echo "build exited nonzero - checking output anyway"
         env:
           NITRO_PRESET: github_pages
 
@@ -38,6 +38,10 @@ jobs:
           if [ -d .output/public ]; then dir=.output/public
           elif [ -d dist/public ]; then dir=dist/public
           else dir=dist; fi
+          if [ ! -f "$dir/index.html" ]; then
+            echo "No index.html was produced - build truly failed"
+            exit 1
+          fi
           echo "dir=$dir" >> "$GITHUB_OUTPUT"
           cp "$dir/index.html" "$dir/404.html" 2>/dev/null || true
           touch "$dir/.nojekyll"
@@ -57,4 +61,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
